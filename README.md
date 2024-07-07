@@ -62,7 +62,7 @@ HOBBY is multivalued attribute:
 <img align="left" alt="covid 19 vacciantion timeline" width="1000px" src="https://github.com/maeshakib/Student-Course-Management-ERD-to-Database-Design/blob/main/student-course-RM.png" /> <br>
                                 **Fig 2: Result of mapping of the Fig 1 ER schema into a relational Database Schema.**
 
-     ## 3.	Create the tables above and insert 10 row in each table
+## Create the tables above and insert 10 row in each table
 
 **Create the STUDENT table**
 
@@ -285,3 +285,65 @@ VALUES
 ('L010', 'C001'),
 ('L010', 'C011');
 ```
+## Queries on Database
+**i.	Find the number of students under each lecturer**
+
+```sql
+SELECT     S.Student_Name,    COUNT(SH.hobby_name) AS Number_of_Hobbies
+FROM     Student S JOIN 
+    Student_Hobby SH ON S.Student_ID = SH.Student_ID
+GROUP BY     S.Student_Name
+ORDER BY     Number_of_Hobbies DESC
+LIMIT 1;
+```
+**ii.	Find courses where the number of students are less than 10.**
+
+```sql
+SELECT     C.Course_Name,    COUNT(SAC.Student_ID_FK) AS Number_of_Students
+FROM     Course C JOIN 
+    Student_Attend_Course SAC ON C.Course_ID = SAC.Course_ID_FK
+GROUP BY     C.Course_Name
+HAVING     COUNT(SAC.Student_ID_FK) < 10;
+
+```
+**iii.	Find the student who has highest number of hobbies.**
+
+```sql
+SELECT     S.Student_Name,    COUNT(SH.hobby_name) AS Number_of_Hobbies
+FROM     Student S JOIN 
+    Student_Hobby SH ON S.Student_ID = SH.Student_ID
+GROUP BY     S.Student_Name
+ORDER BY     Number_of_Hobbies DESC
+LIMIT 1;
+ 
+```
+**iv.	Find the lecturer details with the highest number of courses.**
+
+```sql
+SELECT     L.Lecturer_Name,    COUNT(LTC.Course_ID_FK) AS Number_of_Courses
+FROM     Lecturer L JOIN 
+    Lecturer_Takes_Course LTC ON L.Lecturer_ID = LTC.Lecturer_ID_FK
+GROUP BY     L.Lecturer_Name
+ORDER BY     Number_of_Courses DESC LIMIT 1;
+
+```
+**v.	Find out the average age of students taking more than 3 courses.**
+
+```sql
+WITH StudentCourseCount AS (
+    SELECT STUDENT_ID_FK, COUNT(COURSE_ID_FK) AS CourseCount
+    FROM STUDENT_ATTEND_COURSE
+    GROUP BY STUDENT_ID_FK
+),
+StudentAge AS (
+    SELECT STUDENT_ID,
+           DATE_PART('year', AGE(DOB)) AS AGE
+    FROM STUDENT
+)
+SELECT AVG(StudentAge.AGE) AS AverageAge
+FROM StudentAge
+JOIN StudentCourseCount ON StudentAge.STUDENT_ID = StudentCourseCount.STUDENT_ID_FK
+WHERE StudentCourseCount.CourseCount > 3;
+
+```
+ 
