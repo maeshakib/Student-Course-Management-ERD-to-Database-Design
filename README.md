@@ -1,4 +1,9 @@
 # Student-Course-Management-ERD-to-Database-Design
+This repository focuses on developing a comprehensive relational database model from an Entity-Relationship Diagram (ERD) for a Student-Course Management system. The key objectives include:
+- Creating the Relational Model (RM): Transforming the ERD into a relational model.
+- Database Implementation: Creating tables based on the relational model and populating them with sample data.
+- Querying for Insights: Running SQL queries to extract insights and manage data related to students, courses, lecturers, and subjects.
+
 ## Entity Relationship Diagram (ERD) to Relational Model(RM)
 <img align="left" alt="covid 19 vacciantion timeline" width="1000px" src="https://github.com/maeshakib/Student-Course-Management-ERD-to-Database-Design/blob/main/student-course-erd.png" /> <br>
                                   **Fig 1: Entity Relation Conceptual Schema**
